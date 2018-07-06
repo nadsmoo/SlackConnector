@@ -25,6 +25,7 @@
         FileComment,
         FileMention,
         PinnedItem,
-        UnpinnedItem
+        UnpinnedItem,
+        MessageReplied
     }
 }

@@ -31,7 +31,7 @@ namespace SlackConnector.Tests.Unit.Models
                 .Select(x => x.ToLower());
             var publicEnumNames = Enum.GetNames(typeof(SlackMessageSubType))
                 .Select(x => x.ToLower());
-
+           
             // then
             publicEnumNames.All(x => internalEnumNames.Contains(x)).ShouldBeTrue();
         }

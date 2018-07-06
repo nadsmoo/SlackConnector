@@ -18,23 +18,26 @@ namespace SlackConnector.Connections.Clients.Chat
         {
             _responseVerifier = responseVerifier;
         }
-
-        public async Task PostMessage(string slackKey, string channel, string text, IList<SlackAttachment> attachments)
+        public async Task PostMessage(string slackKey, string channel, string text, IList<SlackAttachment> attachments, string threadId = null)
         {
             var request = ClientConstants
-                       .SlackApiHost
-                       .AppendPathSegment(SEND_MESSAGE_PATH)
-                       .SetQueryParam("token", slackKey)
-                       .SetQueryParam("channel", channel)
-                       .SetQueryParam("text", text)
-                       .SetQueryParam("as_user", "true")
-                       .SetQueryParam("link_names", "true");
-            
+                .SlackApiHost
+                .AppendPathSegment(SEND_MESSAGE_PATH)
+                .SetQueryParam("token", slackKey)
+                .SetQueryParam("channel", channel)
+                .SetQueryParam("text", text)
+                .SetQueryParam("as_user", "true")
+                .SetQueryParam("link_names", "true");
+
             if (attachments != null && attachments.Any())
             {
                 request.SetQueryParam("attachments", JsonConvert.SerializeObject(attachments));
             }
 
+            if (threadId != null)
+            {
+                request.SetQueryParam("thread_ts", threadId);
+            }
             var response = await request.GetJsonAsync<StandardResponse>();
             _responseVerifier.VerifyResponse(response);
         }

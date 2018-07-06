@@ -25,6 +25,7 @@
         file_comment,
         file_mention,
         pinned_item,
-        unpinned_item
+        unpinned_item,
+        message_replied
     }
 }
